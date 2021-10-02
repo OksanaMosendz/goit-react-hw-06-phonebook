@@ -34,8 +34,7 @@ export const App = () => {
   const handleClickDelete = e => {
     const updatedContacts = [];
     contacts.forEach(
-      (contact, index) =>
-        contact.id !== e.target.id && updatedContacts.push(contact),
+      contact => contact.id !== e.target.id && updatedContacts.push(contact),
     );
     setContacts(updatedContacts);
   };

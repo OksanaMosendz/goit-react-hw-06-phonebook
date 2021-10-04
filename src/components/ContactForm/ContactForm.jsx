@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Form, Label } from './ContactForm.styled';
+import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/actions';
 
-export const ContactForm = ({ onSubmit }) => {
+const ContactForm = ({ items, addContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const formSubmit = e => {
     e.preventDefault();
-    onSubmit(name, number);
+
+    const isInList =
+      items.length > 0
+        ? items.some(
+            contact => contact.name.toLowerCase() === name.toLowerCase(),
+          )
+        : false;
+
+    isInList
+      ? alert(name + ' is already in contacts.')
+      : addContact({ name: name, id: uuidv4(), number: number });
+
     setName('');
     setNumber('');
   };
@@ -45,6 +58,12 @@ export const ContactForm = ({ onSubmit }) => {
   );
 };
 
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+const mapStateToProps = state => ({
+  items: state.contacts.items,
+});
+
+const mapDispatchToProps = dispatch => ({
+  addContact: contact => dispatch(actions.addContact(contact)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

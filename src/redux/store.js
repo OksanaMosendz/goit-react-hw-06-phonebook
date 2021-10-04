@@ -6,16 +6,33 @@ const initialState = {
     filter: '',
   },
 };
+console.log(initialState);
 
 const reducer = (state = initialState, { type, payload }) => {
-  const { items } = state.contacts;
-
   switch (type) {
     case 'phoneBook/addContact':
-      return { items: [...items, payload] };
+      return {
+        contacts: {
+          ...state.contacts,
+          items: [...state.contacts.items, payload],
+        },
+      };
 
     case 'phoneBook/deleteContact':
-      return { items: items.filter(item => item.id !== payload) };
+      return {
+        contacts: {
+          ...state.contacts,
+          items: state.contacts.items.filter(item => item.id !== payload),
+        },
+      };
+
+    case 'phoneBook/filterContacts':
+      return {
+        contacts: {
+          ...state.contacts,
+          filter: payload,
+        },
+      };
 
     default:
       return state;

@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import { Label } from './Filter.styled';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/actions';
 
-const Filter = ({ filterContacts, filter }) => {
+export const Filter = ({ filterContacts, filter }) => {
   return (
     <Label>
       Find contacts by name
@@ -18,16 +16,6 @@ const Filter = ({ filterContacts, filter }) => {
     </Label>
   );
 };
-
-const mapStateToProps = state => ({
-  filter: state.contacts.filter,
-});
-
-const mapDispatchToProps = dispatch => ({
-  filterContacts: value => dispatch(actions.filterContacts(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
 
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,

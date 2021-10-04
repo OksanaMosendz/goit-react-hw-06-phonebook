@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Label } from './ContactForm.styled';
 import { v4 as uuidv4 } from 'uuid';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/actions';
 
-const ContactForm = ({ items, addContact }) => {
+export const ContactForm = ({ items, addContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -58,12 +57,13 @@ const ContactForm = ({ items, addContact }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  items: state.contacts.items,
-});
-
-const mapDispatchToProps = dispatch => ({
-  addContact: contact => dispatch(actions.addContact(contact)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+ContactForm.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }),
+  ),
+  addContact: PropTypes.func.isRequired,
+};

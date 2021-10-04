@@ -1,14 +1,15 @@
+import { actionTypes } from './phonebook-types';
 export const addContact = contact => ({
-  type: 'phoneBook/addContact',
+  type: actionTypes.ADD,
   payload: contact,
 });
 
 export const deleteContact = id => ({
-  type: 'phoneBook/deleteContact',
+  type: actionTypes.DELETE,
   payload: id,
 });
 
 export const filterContacts = filterValue => ({
-  type: 'phoneBook/filterContacts',
+  type: actionTypes.FILTER,
   payload: filterValue,
 });

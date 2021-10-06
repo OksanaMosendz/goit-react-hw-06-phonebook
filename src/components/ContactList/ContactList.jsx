@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types';
 import { Button, Li, P } from './ContactList.styled';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../../redux/phonebook/phonebook-actions';
+import { getFilter, getItems } from '../../redux/phonebook/phonebook-selectors';
 
-export const ContactList = ({ filter, items, deleteContact }) => {
+export const ContactList = () => {
+  const items = useSelector(getItems);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+
   const filteredContacts = items.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase()),
   );
@@ -17,7 +24,7 @@ export const ContactList = ({ filter, items, deleteContact }) => {
             <Button
               id={contact.id}
               type="button"
-              onClick={e => deleteContact(e.target.id)}
+              onClick={e => dispatch(actions.deleteContact(e.target.id))}
             >
               Delete
             </Button>

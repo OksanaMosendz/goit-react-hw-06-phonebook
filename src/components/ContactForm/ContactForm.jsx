@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Label } from './ContactForm.styled';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../../redux/phonebook/phonebook-actions';
+import { getItems } from '../../redux/phonebook/phonebook-selectors';
 
-export const ContactForm = ({ items, addContact }) => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const items = useSelector(getItems);
+
+  const dispatch = useDispatch();
+  const addContact = contact => dispatch(actions.addContact(contact));
 
   const formSubmit = e => {
     e.preventDefault();
@@ -19,7 +27,7 @@ export const ContactForm = ({ items, addContact }) => {
 
     isInList
       ? alert(name + ' is already in contacts.')
-      : addContact({ name: name, id: uuidv4(), number: number });
+      : addContact({ name, id: uuidv4(), number });
 
     setName('');
     setNumber('');

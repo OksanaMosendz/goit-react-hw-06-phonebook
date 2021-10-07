@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Form, Label } from './ContactForm.styled';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +12,8 @@ export const ContactForm = () => {
   const items = useSelector(getItems);
 
   const dispatch = useDispatch();
-  const addContact = contact => dispatch(actions.addContact(contact));
+  const addContact = () =>
+    dispatch(actions.addContact({ name, id: uuidv4(), number }));
 
   const formSubmit = e => {
     e.preventDefault();
@@ -25,9 +25,7 @@ export const ContactForm = () => {
           )
         : false;
 
-    isInList
-      ? alert(name + ' is already in contacts.')
-      : addContact({ name, id: uuidv4(), number });
+    isInList ? alert(name + ' is already in contacts.') : addContact();
 
     setName('');
     setNumber('');
@@ -63,15 +61,4 @@ export const ContactForm = () => {
       <button type="submit">Add contact</button>
     </Form>
   );
-};
-
-ContactForm.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
-  addContact: PropTypes.func.isRequired,
 };

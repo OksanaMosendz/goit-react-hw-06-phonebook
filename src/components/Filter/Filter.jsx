@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Label } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/phonebook/phonebook-actions';
@@ -21,9 +20,4 @@ export const Filter = () => {
       />
     </Label>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  filterContacts: PropTypes.func.isRequired,
 };
